@@ -1,3 +1,4 @@
+name: .abc-rancher-pipeline.yml
 stages:
 - name: Test
   steps:
