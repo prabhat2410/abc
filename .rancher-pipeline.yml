@@ -3,6 +3,6 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: print("Hi")
+      shellScript: echo "Hi"
 timeout: 60
 notification: {}
