@@ -5,7 +5,9 @@ stages:
       image: python:latest
       shellScript: |-
         echo "Hi"
-        exit 1
+        import os
+        command = 'kubectl get pods'
+        p = os.system('sudo -S %s' % (command))
 - name: test2
   steps:
   - runScriptConfig:
