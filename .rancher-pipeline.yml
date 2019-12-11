@@ -3,11 +3,12 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: |-
-        echo "Hi"
-        import os
-        command = 'kubectl get pods'
-        p = os.system('sudo -S %s' % (command))
+      shellScript: "#echo \"Hi\"\n#import os\n#command = 'kubectl get pods'\n#p =
+        os.system('sudo -S %s' % (command))\n\napt-get update\napt-get install sshpass
+        \n\nsshpass -p mehant ssh -tt -o StrictHostKeyChecking=no mehant@192.168.100.178
+        << EOF\n\ndir=`pwd`\n\necho \"Dir = ${dir}\"\n\npod_name=`kubectl --kubeconfig=config-176
+        get pods -n updateandrollback |grep \"api-test\" |cut -d \" \" -f1|head -n1`\n\necho
+        \"Pod anme = ${pod_name}\"\n\nEOF"
 - name: test2
   steps:
   - runScriptConfig:
