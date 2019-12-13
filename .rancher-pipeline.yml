@@ -35,8 +35,8 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p root ssh
-        -tt -o StrictHostKeyChecking=no root@10.0.8.66 << EOF\n\nimport time\ntime.sleep(60)\narr
+      shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p abc@123
+        ssh -tt -o StrictHostKeyChecking=no root@10.0.8.66 << EOF\n\nimport time\ntime.sleep(60)\narr
         = `kubectl --kubeconfig=config-176 get pods -n=p-jnm8q-pipeline | grep hello-world|
         awk '{print $3}'`\nfor a in arr:\n\tfor i in range(5):\n\t\tb = a.lower()\n\t\tif
         a.lower() == 'running'\n\t\t\techo \"Pods not running state\"\n\t\t\texit
