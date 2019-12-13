@@ -27,6 +27,12 @@ stages:
   - runScriptConfig:
       image: python:latest
       shellScript: echo "Hi2"
+    when:
+      event:
+        include:
+        - pull_request
+        - push
+        - tag
 - name: deploy
   steps:
   - applyYamlConfig:
