@@ -38,7 +38,7 @@ stages:
       shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p mehant
         ssh -tt -o StrictHostKeyChecking=no mehant@192.168.100.178 << EOF\n\nimport
         time\ntime.sleep(60)\narr = `kubectl --kubeconfig=config-176 get pods -n=p-bvfxs-pipeline
-        | grep broker| awk '{print $3}'`\nfor a in arr:\n\tfor i in range(5):\n\t\tb
+        | grep hello-world| awk '{print $3}'`\nfor a in arr:\n\tfor i in range(5):\n\t\tb
         = a.lower()\n\t\tif a.lower() == 'running'\n\t\t\techo \"Pods not running
         state\"\n\t\t\texit 0\n\t\telif b == 'terminating' or b == 'failed' or b ==
         'unknown' or b == 'error' or b == 'Terminated'\n\t\t\techo \"Pods not in running
