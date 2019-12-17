@@ -3,25 +3,10 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: "#echo \"Hi\"\n#import os\n#command = 'kubectl get pods'\n#p =
-        os.system('sudo -S %s' % (command))\n\napt-get update\napt-get install sshpass
-        \n\nsshpass -p mehant ssh -tt -o StrictHostKeyChecking=no mehant@192.168.100.178
-        << EOF\n\nimport time\ntime.sleep(60)\narr = kubectl --kubeconfig=config-176
-        get pods -n=p-bvfxs-pipeline | grep broker| awk '{print $3}'\nfor a in arr:\n\tfor
-        i in range(5):\n\t\tb = a.lower()\n\t\tif a.lower() == 'running'\n\t\t\techo
-        \"Pods not running state\"\n\t\t\texit 0\n\t\telif b == 'terminating' or b
-        == 'failed' or b == 'unknown' or b == 'error' or b == 'Terminated'\n\t\t\techo
-        \"Pods not in running state\"\n\t\t\texit 1\n\t\telif b == 'removing' or b
-        == 'containercreating' or b == 'pending'\n\t\t\ttime.sleep(30)\n\t\telse\n\t\t\techo
-        \"unknown status\"\n\texit 1\t\t\n\t\t\t\n\ndir=`pwd`\n\necho \"Dir = ${dir}\"\n\npod_name=`kubectl
-        --kubeconfig=config-176 get pods -n updateandrollback |grep \"api-test\" |cut
-        -d \" \" -f1|head -n1`\n\necho \"Pod anme = ${pod_name}\"\n\nEOF"
+      shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p password
+        ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178 'kubectl get pods'\n"
   when:
-    event:
-      include:
-      - pull_request
-      - push
-      - tag
+    event: {}
 - name: test2
   steps:
   - runScriptConfig:
