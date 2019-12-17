@@ -41,18 +41,19 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: "import paramiko\nimport time\nssh = paramiko.SSHClient()\n#ssh.load_system_host_keys()\nssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\nssh.connect('192.168.100.178',
-        username='newuser', password='password')\n\n#apt-get update\n#apt-get install
-        sshpass \n\n#sshpass -p password ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178
+      shellScript: "#import paramiko\n#import time\n#ssh = paramiko.SSHClient()\n#ssh.load_system_host_keys()\n#ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n#ssh.connect('192.168.100.178',
+        username='newuser', password='password')\n\napt-get update\napt-get install
+        sshpass \n\nsshpass -p password ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178
         << EOF\n##sshpass -p password ssh -tt -o StrictHostKeyChecking=no newuser@10.0.8.66
-        << EOF\n\n#import time\n#time.sleep(60)\narr = `kubectl --kubeconfig=config-176
+        << EOF\n\n#import time\n#time.sleep(60)\n#rr = `kubectl --kubeconfig=config-176
         get pods -n=p-bvfxs-pipeline | grep hello-world| awk '{print $3}'`\n##arr
         = `kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world|
-        awk '{print $3}'`\n\nfor a in arr:\n\tfor i in range(5):\n\t\tb = a.lower()\n\t\tif
-        a.lower() == 'running'\n\t\t\techo \"Pods not running state\"\n\t\t\texit
-        0\n\t\telif b == 'terminating' or b == 'failed' or b == 'unknown' or b ==
-        'error' or b == 'Terminated'\n\t\t\techo \"Pods not in running state\"\n\t\t\texit
-        1\n\t\telif b == 'removing' or b == 'containercreating' or b == 'pending'\n\t\t\ttime.sleep(30)\n\t\telse\n\t\t\techo
+        awk '{print $3}'`\n\npython\narr = [\"Hello\", \"world\"]\nfor a in arr:\n\tfor
+        i in range(5):\n\t\tb = a.lower()\n\t\tif a.lower() == 'running'\n\t\t\techo
+        \"Pods not running state\"\n\t\t\texit 0\n\t\telif b == 'terminating' or b
+        == 'failed' or b == 'unknown' or b == 'error' or b == 'Terminated'\n\t\t\techo
+        \"Pods not in running state\"\n\t\t\texit 1\n\t\telif b == 'removing' or b
+        == 'containercreating' or b == 'pending'\n\t\t\ttime.sleep(30)\n\t\telse\n\t\t\techo
         \"unknown status\"\n\texit 1\t\t\n\t\t\t\n\n##dir=`pwd`\n\n##echo \"Dir =
         ${dir}\"\n\n##pod_name=`kubectl --kubeconfig=config-176 get pods -n updateandrollback
         |grep \"api-test\" |cut -d \" \" -f1|head -n1`\n\n##echo \"Pod anme = ${pod_name}\"\narr
