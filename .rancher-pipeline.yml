@@ -4,8 +4,10 @@ stages:
   - runScriptConfig:
       image: python:latest
       shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p password
-        ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178 -x 'kubectl get
-        pods'"
+        ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178 \nkubectl --kubeconfig=config-176
+        get pods -n=p-bvfxs-pipeline | grep hello-world| awk '{print $3}'\necho \"Hi\"\nkubectl
+        --kubeconfig=config-176 get pods -n=p-bvfxs-pipeline | grep hello-world| awk
+        '{print $3}'"
   when:
     event: {}
 - name: test2
