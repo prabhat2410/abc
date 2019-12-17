@@ -41,11 +41,11 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: "apt-get update\napt-get install sshpass \n\n#sshpass -p mehant
-        ssh -tt -o StrictHostKeyChecking=no mehant@192.168.100.178 << EOF\nsshpass
-        -p test ssh -tt -o StrictHostKeyChecking=no test@10.0.8.66 << EOF\n\nimport
-        time\ntime.sleep(60)\n#arr = `kubectl --kubeconfig=config-176 get pods -n=p-tv48x-pipeline
-        | grep hello-world| awk '{print $3}'`\narr = `kubectl --kubeconfig=config
+      shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p password
+        ssh -tt -o StrictHostKeyChecking=no nerwuser@192.168.100.178 << EOF\n#sshpass
+        -p password ssh -tt -o StrictHostKeyChecking=no newuser@10.0.8.66 << EOF\n\nimport
+        time\ntime.sleep(60)\narr = `kubectl --kubeconfig=config-176 get pods -n=p-bvfxs-pipeline
+        | grep hello-world| awk '{print $3}'`\n#arr = `kubectl --kubeconfig=config
         get pods -n=p-jnm8q-pipeline | grep hello-world| awk '{print $3}'`\n\nfor
         a in arr:\n\tfor i in range(5):\n\t\tb = a.lower()\n\t\tif a.lower() == 'running'\n\t\t\techo
         \"Pods not running state\"\n\t\t\texit 0\n\t\telif b == 'terminating' or b
