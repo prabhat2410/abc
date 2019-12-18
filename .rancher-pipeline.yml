@@ -12,6 +12,12 @@ stages:
         \" \" -f3-\n\n#a=kubectl --kubeconfig=config-176 describe pods -n=p-bvfxs-pipeline
         | grep hello-world\n\necho \"Hi\"\n#kubectl --kubeconfig=config-176 get pods
         -n=p-bvfxs-pipeline | grep hello-world| awk '{print $3}'\nEOF"
+    when:
+      event:
+        include:
+        - pull_request
+        - push
+        - tag
   when:
     event: {}
 - name: test2
@@ -34,13 +40,15 @@ stages:
   - runScriptConfig:
       image: python:latest
       shellScript: "apt-get update\napt-get install sshpass \n\nsshpass -p password
-        ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178 << EOF\npython\nimport
-        time\ntime.sleep(60)\narr = [\"Hello\", \"world\"]\nfor a in arr:\n\tfor i
-        in range(5):\n\t\tb = a.lower()\n\t\tif a.lower() == \"running\":\n\t\t\tprint
-        \"Pods not running state\"\n\t\t\texit(0)\n\t\telif b == 'terminating' or
-        b == 'failed' or b == 'unknown' or b == 'error' or b == 'Terminated':\n\t\t\tprint
-        \"Pods not in running state\"\n\t\t\texit(1)\n\t\telif b == 'removing' or
-        b == 'containercreating' or b == 'pending':\n\t\t\ttime.sleep(30)\n\t\telse:\n\t\t\tprint
-        \"unknown status\"\n\texit(1)\t\t\nexit()\t\t\t\n\nEOF"
+        ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 << EOF\nkubectl --kubeconfig=config
+        get pods -n=p-jnm8q-pipeline | grep hello-world\n#sshpass -p password ssh
+        -tt -o StrictHostKeyChecking=no newuser@192.168.100.178 << EOF\n#python\n#import
+        time\n#time.sleep(60)\n#arr = [\"Hello\", \"world\"]\n#for a in arr:\n#\tfor
+        i in range(5):\n#\t\tb = a.lower()\n#\t\tif a.lower() == \"running\":\n#\t\t\tprint
+        \"Pods not running state\"\n#\t\t\texit(0)\n#\t\telif b == 'terminating' or
+        b == 'failed' or b == 'unknown' or b == 'error' or b == 'Terminated':\n#\t\t\tprint
+        \"Pods not in running state\"\n#\t\t\texit(1)\n#\t\telif b == 'removing' or
+        b == 'containercreating' or b == 'pending':\n#\t\t\ttime.sleep(30)\n#\t\telse:\n#\t\t\tprint
+        \"unknown status\"\n#\texit(1)\t\t\n#exit()\t\t\t\n\nEOF"
 timeout: 60
 notification: {}
