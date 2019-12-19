@@ -13,11 +13,7 @@ stages:
         | grep hello-world\n\necho \"Hi\"\n#kubectl --kubeconfig=config-176 get pods
         -n=p-bvfxs-pipeline | grep hello-world| awk '{print $3}'\nEOF"
     when:
-      event:
-        include:
-        - pull_request
-        - push
-        - tag
+      event: {}
   when:
     event: {}
 - name: test2
