@@ -34,11 +34,7 @@ stages:
   - applyYamlConfig:
       path: ./deployment.yaml
     when:
-      event:
-        include:
-        - pull_request
-        - push
-        - tag
+      event: {}
 - name: Checking pod status
   steps:
   - runScriptConfig:
