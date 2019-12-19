@@ -3,15 +3,10 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: "apt-get update\napt-get install sshpass \n\n#sshpass -p password
-        ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.178 << EOF\nsshpass
-        -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 << EOF\n\n#kubectl
-        --kubeconfig=config-176 get pods -n=p-bvfxs-pipeline | grep hello-world\narr=`kubectl
-        --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world`\n#kubectl
-        --kubeconfig=config get pods -n=p-bvfxs-pipeline | grep hello-world| cut -d
-        \" \" -f3-\n\n#a=kubectl --kubeconfig=config-176 describe pods -n=p-bvfxs-pipeline
-        | grep hello-world\n\necho \"Hi\"\n#kubectl --kubeconfig=config-176 get pods
-        -n=p-bvfxs-pipeline | grep hello-world| awk '{print $3}'\nEOF"
+      shellScript: "apt-get update\napt-get install sshpass \n\n\nsshpass -p password
+        ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 << EOF\n\narr=`kubectl
+        --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world`\n\necho
+        \"Hi\"\nEOF"
     when:
       event: {}
   when:
