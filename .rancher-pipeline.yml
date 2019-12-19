@@ -3,8 +3,8 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: |2
-
+      shellScript: |
+        apt-get install sshpass
         sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 arr=kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world | echo $arr | cut -d' ' -f3
     when:
       event: {}
