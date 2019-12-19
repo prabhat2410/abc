@@ -6,9 +6,10 @@ stages:
       shellScript: |
         apt-get update
         apt-get install sshpass
-        sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 <<EOF
-        arr=kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world
-        echo $arr | cut -d' ' -f3
+        #sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 arr=kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world | echo $arr | cut -d' ' -f3
+        sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64
+        arr=`kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world`
+        echo $arr | awk {'print $3'}
     when:
       event: {}
   when:
