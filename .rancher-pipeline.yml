@@ -6,7 +6,9 @@ stages:
       shellScript: |
         apt-get update
         apt-get install sshpass
-        sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 arr=kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world | echo $arr | cut -d' ' -f3
+        sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 <<EOF
+        arr=kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world
+        echo $arr | cut -d' ' -f3
     when:
       event: {}
   when:
@@ -26,6 +28,12 @@ stages:
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
+    when:
+      event:
+        include:
+        - pull_request
+        - push
+        - tag
 - name: Checking pod status
   steps:
   - runScriptConfig:
@@ -43,5 +51,11 @@ stages:
         == 'Terminated':\n#\t\t\tprint \"Pods not in running state\"\n#\t\t\texit(1)\n#\t\telif
         b == 'removing' or b == 'containercreating' or b == 'pending':\n#\t\t\ttime.sleep(30)\n#\t\telse:\n#\t\t\tprint
         \"unknown status\"\n#\texit(1)\t\t\n#exit()\t\t\t\n\nEOF"
+    when:
+      event:
+        include:
+        - pull_request
+        - push
+        - tag
 timeout: 60
 notification: {}
