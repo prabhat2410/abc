@@ -46,5 +46,10 @@ stages:
         sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 ./run.sh
     when:
       event: {}
+- name: Test Stage
+  steps:
+  - runScriptConfig:
+      image: python:latest
+      shellScript: echo "HI"
 timeout: 60
 notification: {}
