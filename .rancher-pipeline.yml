@@ -11,11 +11,7 @@ stages:
         #arr=`kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world`
         #echo $arr | awk {'print $3'}
     when:
-      event:
-        include:
-        - pull_request
-        - push
-        - tag
+      event: {}
   when:
     event: {}
 - name: test2
