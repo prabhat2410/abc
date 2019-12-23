@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: hello-world-pod
-        image: postgres
+        image: hello-world
         ports: 
         - containerPort: 80
         - containerPort: 443
