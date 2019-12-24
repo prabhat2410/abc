@@ -4,7 +4,7 @@ stages:
   - runScriptConfig:
       image: python:latest
       shellScript: |
-        echo ${CICD_PROJECT_ID}
+        echo "CICD_PROJECT_ID ${CICD_PROJECT_ID}"
         echo ${CICD_PIPELINE_ID}
     when:
       event: {}
@@ -35,7 +35,7 @@ stages:
         apt-get update
         apt-get install sshpass
         #sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 arr=kubectl --kubeconfig=config get pods -n=p-jnm8q-pipeline | grep hello-world | echo $arr | cut -d' ' -f3
-        sshpass -p password ssh -tt -o StrictHostKeyChecking=no root@10.0.8.64 ./run.sh p-jnm8q-pipeline hello-world
+        sshpass -p password ssh -tt -o StrictHostKeyChecking=no newuser@192.168.100.151 ./run.sh ${CICD_PROJECT_ID} hello-world
     when:
       event: {}
 - name: Test Stage
