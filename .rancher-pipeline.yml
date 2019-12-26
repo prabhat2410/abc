@@ -3,9 +3,9 @@ stages:
   steps:
   - runScriptConfig:
       image: python:latest
-      shellScript: |
-        echo "CICD_PROJECT_ID ${CICD_PROJECT_ID}"
-        echo ${CICD_PIPELINE_ID}
+      shellScript: "apt-get update\napt-get install sshpass\nsshpass -p password ssh
+        -tt -o StrictHostKeyChecking=no newuser@CSP2-CENTOS-4\n\t#CSP2-CENTOS-4\necho
+        \"CICD_PROJECT_ID ${CICD_PROJECT_ID}\"\necho ${CICD_PIPELINE_ID}\n"
     when:
       event: {}
   when:
